@@ -1,0 +1,3 @@
+pysftp
+docopt==0.6.2
+pyyaml

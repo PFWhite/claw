@@ -1,0 +1,20 @@
+"""
+This is an example config file to connect to a free public sftp
+test server. It will not copy any data, but will connect and close.
+
+One note, in order for Claw to run, the system running it needs to
+have already trusted the server. To do this, just 'ssh test.rebex.net'
+and allow the system to add it.
+"""
+arguments:
+  --destination: null 
+  --help: False
+  --key_path: null
+  --key_pw: null
+  --password: password 
+  --username: demo 
+  --verbose: False
+  --version: False
+  <ftp_host>: test.rebex.net
+  <ftp_port>: '22'
+  <remote_file_path>: null 
