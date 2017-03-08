@@ -1,4 +1,4 @@
-"""The Claw.
+docstr = """The Claw.
 This module is used to connect to an sftp server and download a file
 
 Usage:
@@ -22,14 +22,15 @@ Options:
 import logging
 import pysftp
 import sys
+from paramiko.ssh_exception import SSHException, BadAuthenticationType
+
 import yaml
 from docopt import docopt
-from paramiko.ssh_exception import SSHException, BadAuthenticationType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-def main(args):
+def main(args=doctopt(docstr)):
     """
     Creates the connection, pulls a file, and closes the connection
 
@@ -103,7 +104,7 @@ def position_claw(host, port,
     return connection_details
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version='1.0.0')
+    arguments = docopt(docstr, version='1.0.0')
     config_file = arguments.get('<config_file>', None)
     if config_file:
         with open(config_file, 'r') as config:
