@@ -14,5 +14,5 @@ setup(name='claw',
               'claw = claw.claw:main',
           ],
       },
-      install_requires=['docopt', 'pyyaml'],
+      install_requires=['docopt', 'pyyaml', 'pysftp'],
       zip_safe=False)
