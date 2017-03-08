@@ -36,6 +36,13 @@ def main(args=docopt(docstr)):
 
     args: a dictionary containing the required parametes for sftp
     """
+    config_path = args.get('<config_file>', None)
+    if config_path:
+        with open(config_path, 'r') as config_file:
+            try:
+                args = yaml.load(config_file.read()).get('arguments')
+            except yaml.YAMLError as exc:
+                print(exc)
 
     verbose = args['--verbose'] or False
     connection_details = position_claw(host=args['<ftp_host>'],
@@ -81,11 +88,9 @@ def get_target(connection, file_path, destination_path, verbose=False):
     destination_path: where we want the file to go
     verbose: print out logs as it happens
     """
-    for path in file_path:
-        logger.info("Downloading remote file file: " + path)
-        logger.info("Saving to local file name: %s " % destination_path or path)
-
-        connection.get(path,destination_path)
+    logger.info("Downloading remote file file: " + file_path)
+    logger.info("Saving to local file name: %s " % destination_path or file_path)
+    connection.get(file_path,destination_path)
 
 def position_claw(host, port,
                   username, password,
@@ -105,12 +110,4 @@ def position_claw(host, port,
 
 if __name__ == '__main__':
     arguments = docopt(docstr, version='1.0.0')
-    config_file = arguments.get('<config_file>', None)
-    if config_file:
-        with open(config_file, 'r') as config:
-            try:
-                arguments = yaml.load(config).get('arguments', None)
-            except yaml.YAMLError as exc:
-                print(exc)
-
     main(arguments)
