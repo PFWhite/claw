@@ -30,7 +30,7 @@ from docopt import docopt
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-def main(args=doctopt(docstr)):
+def main(args=docopt(docstr)):
     """
     Creates the connection, pulls a file, and closes the connection
 

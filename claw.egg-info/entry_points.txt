@@ -1,0 +1,3 @@
+[console_scripts]
+claw = claw.claw:main
+
