@@ -1,11 +1,9 @@
-"""
-This is an example config file to connect to a free public sftp
-test server. It will not copy any data, but will connect and close.
+# This is an example config file to connect to a free public sftp
+# test server. It will not copy any data, but will connect and close.
 
-One note, in order for Claw to run, the system running it needs to
-have already trusted the server. To do this, just 'ssh test.rebex.net'
-and allow the system to add it.
-"""
+# One note, in order for Claw to run, the system running it needs to
+# have already trusted the server. To do this, just 'ssh test.rebex.net'
+# and allow the system to add it.
 arguments:
   --destination: null 
   --help: False

@@ -1,4 +1,4 @@
-"""The Claw.
+docstr = """The Claw.
 This module is used to connect to an sftp server and download a file
 
 Usage:
@@ -22,19 +22,27 @@ Options:
 import logging
 import pysftp
 import sys
+from paramiko.ssh_exception import SSHException, BadAuthenticationType
+
 import yaml
 from docopt import docopt
-from paramiko.ssh_exception import SSHException, BadAuthenticationType
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-def main(args):
+def main(args=docopt(docstr)):
     """
     Creates the connection, pulls a file, and closes the connection
 
     args: a dictionary containing the required parametes for sftp
     """
+    config_path = args.get('<config_file>', None)
+    if config_path:
+        with open(config_path, 'r') as config_file:
+            try:
+                args = yaml.load(config_file.read()).get('arguments')
+            except yaml.YAMLError as exc:
+                print(exc)
 
     verbose = args['--verbose'] or False
     connection_details = position_claw(host=args['<ftp_host>'],
@@ -80,11 +88,9 @@ def get_target(connection, file_path, destination_path, verbose=False):
     destination_path: where we want the file to go
     verbose: print out logs as it happens
     """
-    for path in file_path:
-        logger.info("Downloading remote file file: " + path)
-        logger.info("Saving to local file name: %s " % destination_path or path)
-
-        connection.get(path,destination_path)
+    logger.info("Downloading remote file file: " + file_path)
+    logger.info("Saving to local file name: %s " % destination_path or file_path)
+    connection.get(file_path,destination_path)
 
 def position_claw(host, port,
                   username, password,
@@ -103,13 +109,5 @@ def position_claw(host, port,
     return connection_details
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version='1.0.0')
-    config_file = arguments.get('<config_file>', None)
-    if config_file:
-        with open(config_file, 'r') as config:
-            try:
-                arguments = yaml.load(config).get('arguments', None)
-            except yaml.YAMLError as exc:
-                print(exc)
-
+    arguments = docopt(docstr, version='1.0.0')
     main(arguments)

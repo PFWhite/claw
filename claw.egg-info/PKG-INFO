@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: claw
+Version: 1.0.0
+Summary: The Claw - Used to download remote files via SFTP
+Home-page: http://github.com/devmattm/claw
+Author: Matthew McConnell
+Author-email: devmattm@gmail.com
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
