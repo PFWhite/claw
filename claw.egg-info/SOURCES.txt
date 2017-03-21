@@ -1,9 +1,0 @@
-claw/__init__.py
-claw/claw.py
-claw.egg-info/PKG-INFO
-claw.egg-info/SOURCES.txt
-claw.egg-info/dependency_links.txt
-claw.egg-info/entry_points.txt
-claw.egg-info/not-zip-safe
-claw.egg-info/requires.txt
-claw.egg-info/top_level.txt
