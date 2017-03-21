@@ -88,9 +88,14 @@ def get_target(connection, file_path, destination_path, verbose=False):
     destination_path: where we want the file to go
     verbose: print out logs as it happens
     """
-    logger.info("Downloading remote file file: " + file_path)
-    logger.info("Saving to local file name: %s " % destination_path or file_path)
-    connection.get(file_path,destination_path)
+
+    if isinstance(file_path, str):
+        file_path = file_path.split()
+
+    for path in file_path:
+        logger.info("Downloading remote file file: %s" % path or '')
+        logger.info("Saving to local file name: %s " % destination_path or path)
+        connection.get(path,destination_path)
 
 def position_claw(host, port,
                   username, password,
