@@ -99,12 +99,17 @@ def position_claw(host, port,
     Process args and get them ready to make a connection
     """
 
+    #Ignore default behavior requiring host to be in known_hosts file
+    cnopts = pysftp.CnOpts()
+    cnopts.hostkeys = None
+
     connection_details = {'host':host,
                           'port':int(port),
                           'username':username,
                           'password':password,
                           'private_key':private_key,
                           'private_key_pass':private_key_pass,
+                          'cnopts':cnopts
                           }
     return connection_details
 
