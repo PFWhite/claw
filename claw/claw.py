@@ -1,3 +1,4 @@
+VER = '1.1.0'
 docstr = """The Claw.
 This module is used to connect to an sftp server and download a file
 
@@ -52,9 +53,8 @@ def main(args=docopt(docstr)):
                                        private_key=args['--key_path'],
                                        private_key_pass=args['--key_pw'])
 
-    connection = get_connection(connection_details, verbose)
-    get_target(connection, args['<remote_file_path>'], args['--destination'], verbose)
-    connection.close()
+    with get_connection(connection_details, verbose) as connection:
+        get_target(connection, args['<remote_file_path>'], args['--destination'], verbose)
 
 def get_connection(connection_details, verbose=False):
     try:
