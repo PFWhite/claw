@@ -119,5 +119,5 @@ def position_claw(host, port,
     return connection_details
 
 if __name__ == '__main__':
-    arguments = docopt(docstr, version='1.0.0')
+    arguments = docopt(docstr, version=VER)
     main(arguments)
