@@ -14,5 +14,5 @@ arguments:
   --verbose: False
   --version: False
   <ftp_host>: test.rebex.net
-  <ftp_port>: '22'
-  <remote_file_path>: null 
+  <ftp_port>: 22
+  <remote_file_path>: [test] 

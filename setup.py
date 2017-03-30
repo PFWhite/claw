@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='claw',
-      version='1.0.0',
+      version='1.1.0',
       description='The Claw - Used to download remote files via SFTP',
       url='http://github.com/devmattm/claw',
       author='Matthew McConnell',

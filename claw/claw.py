@@ -1,3 +1,4 @@
+VER = '1.1.0'
 docstr = """The Claw.
 This module is used to connect to an sftp server and download a file
 
@@ -52,9 +53,8 @@ def main(args=docopt(docstr)):
                                        private_key=args['--key_path'],
                                        private_key_pass=args['--key_pw'])
 
-    connection = get_connection(connection_details, verbose)
-    get_target(connection, args['<remote_file_path>'], args['--destination'], verbose)
-    connection.close()
+    with get_connection(connection_details, verbose) as connection:
+        get_target(connection, args['<remote_file_path>'], args['--destination'], verbose)
 
 def get_connection(connection_details, verbose=False):
     try:
@@ -88,9 +88,14 @@ def get_target(connection, file_path, destination_path, verbose=False):
     destination_path: where we want the file to go
     verbose: print out logs as it happens
     """
-    logger.info("Downloading remote file file: " + file_path)
-    logger.info("Saving to local file name: %s " % destination_path or file_path)
-    connection.get(file_path,destination_path)
+
+    if isinstance(file_path, str):
+        file_path = file_path.split()
+
+    for path in file_path:
+        logger.info("Downloading remote file file: %s" % path or '')
+        logger.info("Saving to local file name: %s " % destination_path or path)
+        connection.get(path,destination_path)
 
 def position_claw(host, port,
                   username, password,
@@ -99,15 +104,20 @@ def position_claw(host, port,
     Process args and get them ready to make a connection
     """
 
+    #Ignore default behavior requiring host to be in known_hosts file
+    cnopts = pysftp.CnOpts()
+    cnopts.hostkeys = None
+
     connection_details = {'host':host,
                           'port':int(port),
                           'username':username,
                           'password':password,
                           'private_key':private_key,
                           'private_key_pass':private_key_pass,
+                          'cnopts':cnopts
                           }
     return connection_details
 
 if __name__ == '__main__':
-    arguments = docopt(docstr, version='1.0.0')
+    arguments = docopt(docstr, version=VER)
     main(arguments)
